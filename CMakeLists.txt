@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.12)
-cmake_policy(SET CMP0135 NEW)
 project(Boost-CMake)
 
 option(BOOST_DISABLE_TESTS "Do not build test targets, even if building standalone" OFF)
