@@ -3,8 +3,8 @@ project(Boost-CMake)
 
 option(BOOST_DISABLE_TESTS "Do not build test targets, even if building standalone" OFF)
 
-set(BOOST_URL "https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2" CACHE STRING "Boost download URL")
-set(BOOST_URL_SHA256 "f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41" CACHE STRING "Boost download URL SHA256 checksum")
+set(BOOST_URL "https://github.com/STEVE4git/boost-cmake/releases/download/boost_unordered_map/boost.tar.bz2" CACHE STRING "Boost download URL")
+set(BOOST_URL_SHA256 "a42713a32df0dee4a2db7f843f6d9aacfff11954a65af8b704332c9afb789884" CACHE STRING "Boost download URL SHA256 checksum")
 
 include(FetchContent)
 FetchContent_Declare(
