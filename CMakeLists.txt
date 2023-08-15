@@ -34,12 +34,6 @@ include(AddBoostTest)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
 
-if(USE_ANDROID)
-  # CMake 3.7.1 doesn't define the target triple for the ASM language,
-  # resulting in all files compiled for the host architecture
-  set(CMAKE_ASM_COMPILER_TARGET "${CMAKE_CXX_COMPILER_TARGET}")
-endif()
-
 set(BOOST_LIBS_REQUIRED
   # Header only libs
   header
@@ -97,9 +91,4 @@ if(NOT BOOST_STANDALONE)
     BOOST_THREAD_USES_CHRONO
     BOOST_THREAD_PROVIDES_EXECUTORS
   )
-endif()
-
-if(USE_ANDROID)
-  # Android doesn't support thread local storage through compiler intrinsics
-  target_compile_definitions(Boost::boost INTERFACE BOOST_ASIO_DISABLE_THREAD_KEYWORD_EXTENSION)
 endif()

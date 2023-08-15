@@ -1,7 +1,5 @@
 #/usr/bin/env bash
 
-NDK_VER=android-ndk-r18b
-
 download_extract() {
     aria2c -x 16 $1 -o $2
     tar -xf $2
@@ -47,12 +45,6 @@ build_install() {
         choco install vswhere
         choco install ninja
     fi
-
-    # Android NDK
-    if [[ "$BUILD_TARGET" == "Android" ]]; then
-        download_extract_zip http://dl.google.com/android/repository/${NDK_VER}-linux-x86_64.zip ${NDK_VER}-linux-x86_64.zip
-        export ANDROID_NDK=$(pwd)/${NDK_VER}
-    fi
 }
 
 build_script() {
@@ -70,11 +62,6 @@ build_script() {
         cmake .. -GNinja \
                  -DCMAKE_C_COMPILER=$CC \
                  -DCMAKE_CXX_COMPILER=$CXX
-    elif [[ "$BUILD_TARGET" == "Android" ]]; then
-        cmake .. -GNinja \
-                 -DCMAKE_SYSTEM_NAME=Android \
-                 -DCMAKE_ANDROID_NDK_TOOLCHAIN_VERSION=clang \
-                 -DCMAKE_ANDROID_ARCH_ABI=${BUILD_ARCH}
     elif [[ "$BUILD_TARGET" == "macOS" ]]; then
         cmake .. -GNinja
     elif [[ "$BUILD_TARGET" == "iOS" ]]; then

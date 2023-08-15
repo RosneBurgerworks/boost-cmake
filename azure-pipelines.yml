@@ -13,22 +13,6 @@ strategy:
       imageName: 'ubuntu-16.04'
       BUILD_TARGET: 'Linux'
       BUILD_COMPILER: 'Clang'
-    Android-arm64:
-      imageName: 'ubuntu-16.04'
-      BUILD_TARGET: 'Android'
-      BUILD_ARCH: 'arm64-v8a'
-    Android-arm:
-      imageName: 'ubuntu-16.04'
-      BUILD_TARGET: 'Android'
-      BUILD_ARCH: 'armeabi-v7a'
-    Android-x86:
-      imageName: 'ubuntu-16.04'
-      BUILD_TARGET: 'Android'
-      BUILD_ARCH: 'x86'
-    Android-x86_64:
-      imageName: 'ubuntu-16.04'
-      BUILD_TARGET: 'Android'
-      BUILD_ARCH: 'x86_64'
     macOS:
       imageName: 'macos-latest'
       BUILD_TARGET: 'macOS'
