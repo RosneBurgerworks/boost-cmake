@@ -13,12 +13,6 @@ strategy:
       imageName: 'ubuntu-16.04'
       BUILD_TARGET: 'Linux'
       BUILD_COMPILER: 'Clang'
-    macOS:
-      imageName: 'macos-latest'
-      BUILD_TARGET: 'macOS'
-    iOS:
-      imageName: 'macos-latest'
-      BUILD_TARGET: 'iOS'
     Windows-v141-amd64:
       imageName: 'vs2017-win2016'
       BUILD_TARGET: 'Windows'
