@@ -1,2 +1,2 @@
 # boost-cmake
-i hate boost
+i don't hate boost
