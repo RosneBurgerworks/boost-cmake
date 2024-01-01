@@ -41,13 +41,6 @@ _add_boost_lib(
     BOOST_SPIRIT_USE_PHOENIX_V3=1
     BOOST_THREAD_DONT_USE_CHRONO=1 
     BOOST_LOG_BUILDING_THE_LIB=1
-    $<$<BOOL:${USE_WINDOWS}>:
-      NOMINMAX
-      WIN32_LEAN_AND_MEAN
-      SECURITY_WIN32
-      __USE_W32_SOCKETS
-      BOOST_USE_WINDOWS_H
-    >
   INCLUDE_PRIVATE
     ${BOOST_SOURCE}/libs/log/src
   LINK
@@ -55,11 +48,6 @@ _add_boost_lib(
     Boost::date_time
     Boost::filesystem
     Boost::thread
-    $<$<BOOL:${USE_WINDOWS}>:
-      ws2_32
-      mswsock
-      advapi32
-    >
 )
 
 try_compile(HAVE_PTHREAD_MUTEX_ROBUST
@@ -79,20 +67,10 @@ try_compile(HAVE_ATOMIC_INT32
 if(NOT HAVE_ATOMIC_INT32)
   target_compile_definitions(Boost_log PRIVATE BOOST_LOG_WITHOUT_IPC)
 else()
-  if(USE_WINDOWS)
-    target_sources(Boost_log PRIVATE
-      ${BOOST_SOURCE}/libs/log/src/windows/object_name.cpp
-      ${BOOST_SOURCE}/libs/log/src/windows/mapped_shared_memory.cpp
-      ${BOOST_SOURCE}/libs/log/src/windows/ipc_sync_wrappers.cpp
-      ${BOOST_SOURCE}/libs/log/src/windows/ipc_reliable_message_queue.cpp
-    )
-    target_link_libraries(Boost_log PRIVATE secur32)
-  else()
-    target_sources(Boost_log PRIVATE
-      ${BOOST_SOURCE}/libs/log/src/posix/object_name.cpp
-      ${BOOST_SOURCE}/libs/log/src/posix/ipc_reliable_message_queue.cpp
-    )
-  endif()
+  target_sources(Boost_log PRIVATE
+    ${BOOST_SOURCE}/libs/log/src/posix/object_name.cpp
+    ${BOOST_SOURCE}/libs/log/src/posix/ipc_reliable_message_queue.cpp
+  )
 endif()
 
 try_compile(HAVE_NATIVE_SYSLOG
@@ -122,13 +100,7 @@ else()
   target_compile_definitions(Boost_log PRIVATE BOOST_LOG_WITHOUT_EVENT_LOG)
 endif()
 
-if(USE_WINDOWS AND NOT BOOST_LOG_WITHOUT_DEBUG_OUTPUT)
-  target_sources(Boost_log PRIVATE
-    ${BOOST_SOURCE}/libs/log/src/windows/debug_output_backend.cpp
-  )
-else()
-  target_compile_definitions(Boost_log PRIVATE BOOST_LOG_WITHOUT_DEBUG_OUTPUT)
-endif()
+target_compile_definitions(Boost_log PRIVATE BOOST_LOG_WITHOUT_DEBUG_OUTPUT)
 
 #TODO: Handle SSSE3 and AVX2 optimizations
 

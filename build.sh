@@ -41,9 +41,6 @@ build_install() {
         brew_install ccache
         brew_install cmake
         brew_install ninja
-    elif [[ "$AGENT_OS" =~ "Windows" ]]; then
-        choco install vswhere
-        choco install ninja
     fi
 }
 
@@ -62,16 +59,6 @@ build_script() {
         cmake .. -GNinja \
                  -DCMAKE_C_COMPILER=$CC \
                  -DCMAKE_CXX_COMPILER=$CXX
-    elif [[ "$BUILD_TARGET" == "macOS" ]]; then
-        cmake .. -GNinja
-    elif [[ "$BUILD_TARGET" == "iOS" ]]; then
-        cmake .. -GNinja \
-                 -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchains/ios.cmake
-    elif [[ "$BUILD_TARGET" == "Windows" ]]; then
-        vcpath=$(vswhere.exe -latest -property installationPath)
-        vcscript="\"$vcpath\\VC\\Auxiliary\\Build\\vcvarsall.bat\" $BUILD_TOOLCHAIN"
-        cmd.exe /c "$vcscript & cmake .. -GNinja -DCMAKE_C_COMPILER=cl.exe -DCMAKE_CXX_COMPILER=cl.exe & ninja -v"
-        exit 0
     fi
 
     ninja -v
